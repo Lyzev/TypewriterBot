@@ -13,7 +13,7 @@
 </div>
 
 ## Installation
-- Download [TypewriterBot](https://github.com/Lyzev/TypewriterBot/releases) and run the installer
+- Download [TypewriterBot](https://github.com/Lyzev/TypewriterBot/releases/latest) and run the installer
 - Download [Geckodriver](https://github.com/mozilla/geckodriver/releases) and put it in the same directory
 - Download [FireFox](https://www.mozilla.org/de/firefox/new/) and run the installer
 
