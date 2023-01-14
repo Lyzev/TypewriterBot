@@ -62,7 +62,7 @@ class TypewriterBot(
         while (isRunning) {
             val actualLetter = driver.findElement(By.xpath("/html/body/div[3]/div[2]/div[3]/div[2]/div[2]/span[1]"))
             if (!isRunning || actualLetter == null || actualLetter.text == null || actualLetter.text.isEmpty()) return
-            if (random.nextInt(100 - errorProbability) == 0)
+            if (random.nextInt(100) + 1 <= errorProbability)
                 driver.findElement(By.tagName("body")).sendKeys(((random.nextInt(26) + 'a'.code).toChar()).toString())
             else
                 driver.findElement(By.tagName("body")).sendKeys(actualLetter.text)
