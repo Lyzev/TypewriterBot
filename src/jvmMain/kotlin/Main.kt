@@ -154,7 +154,7 @@ fun App() {
                             typewriterBot!!.start()
                         }.start()
                     }
-                }) {
+                }, enabled = enabled) {
                     Text(if (typewriterBot != null && typewriterBot!!.isRunning) "Stop" else "Start", fontSize = 16.sp)
                 }
             }
