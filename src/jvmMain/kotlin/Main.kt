@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.*
+import io.github.bonigarcia.wdm.WebDriverManager
 import java.awt.Desktop
 import java.net.URI
 import java.util.*
@@ -50,8 +51,6 @@ fun App() {
     var errorProbability by remember { mutableStateOf(2) }
 
     var levels by remember { mutableStateOf(10) }
-
-    var typewriterBot: TypewriterBot? by remember { mutableStateOf(null) }
 
     MaterialTheme(colors = darkColors()) {
         Scaffold {
@@ -104,7 +103,8 @@ fun App() {
                 Spacer(Modifier.height(5.dp))
 
                 // Text field for typing speed input
-                OutlinedTextField(value = wpm.toString(),
+                OutlinedTextField(
+                    value = wpm.toString(),
                     onValueChange = { value ->
                         if (value.length in 1..3) wpm = value.filter { it.isDigit() }.toInt()
                         else if (value.isEmpty()) wpm = 1
@@ -119,7 +119,8 @@ fun App() {
                 Spacer(Modifier.height(5.dp))
 
                 // Text field for error probability input
-                OutlinedTextField(value = errorProbability.toString(),
+                OutlinedTextField(
+                    value = errorProbability.toString(),
                     onValueChange = { value ->
                         if (value.length in 1..3) errorProbability = value.filter { it.isDigit() }.toInt()
                         else if (value.isEmpty()) errorProbability = 0
@@ -134,7 +135,8 @@ fun App() {
                 Spacer(Modifier.height(5.dp))
 
                 // Text field for number of levels input
-                OutlinedTextField(value = levels.toString(),
+                OutlinedTextField(
+                    value = levels.toString(),
                     onValueChange = { value ->
                         if (value.length in 1..3) levels = value.filter { it.isDigit() }.toInt()
                         else if (value.isEmpty()) levels = 1
@@ -150,26 +152,29 @@ fun App() {
 
                 // Button to start/stop the bot
                 OutlinedButton({
-                    if (typewriterBot != null && typewriterBot!!.isRunning) {
+                    if (TypewriterBot.isRunning) {
                         Thread {
                             enabled = false
-                            typewriterBot?.stop()
-                            typewriterBot = null
+                            TypewriterBot.stop()
                             enabled = true
                         }.start()
                     } else {
-                        val delay = 1000.0 / ((wpm * 5.0) / 60.0)
                         Thread {
                             enabled = false
-                            typewriterBot = TypewriterBot(
-                                username, password, (delay * .95).toLong(), (delay * 1.05).toLong(), errorProbability, levels
+                            val delay = 1000.0 / ((wpm * 5) / 60.0)
+                            TypewriterBot.setup(
+                                username,
+                                password,
+                                (delay * .95).toLong(), (delay * 1.05).toLong(),
+                                errorProbability,
+                                levels
                             )
                             enabled = true
-                            typewriterBot?.start()
+                            TypewriterBot.start()
                         }.start()
                     }
                 }, enabled = enabled) {
-                    Text(if (typewriterBot != null && typewriterBot!!.isRunning) "Stop" else "Start", fontSize = 16.sp)
+                    Text(if (TypewriterBot.isRunning) "Stop" else "Start", fontSize = 16.sp)
                 }
             }
         }
@@ -177,9 +182,6 @@ fun App() {
 }
 
 fun main() = application {
-    // Sets the path to the driver
-    System.setProperty("webdriver.gecko.driver", "geckodriver.exe")
-
     // Creates a window
     Window(
         onCloseRequest = ::exitApplication, state = rememberWindowState(

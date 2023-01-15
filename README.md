@@ -12,10 +12,10 @@
     <img src="https://img.shields.io/github/contributors/Lyzev/TypewriterBot" alt="GitHub contributors"/>
 </div>
 
-## Installation
+## Installation / Usage
 - Download [TypewriterBot](https://github.com/Lyzev/TypewriterBot/releases/latest) and run the installer
-- Download [Geckodriver](https://github.com/mozilla/geckodriver/releases) and put it in the same directory
 - Download [FireFox](https://www.mozilla.org/de/firefox/new/) and run the installer
+- Run the TypewriterBot and have fun!
 
 ## Video Tutorial
 Coming soon...

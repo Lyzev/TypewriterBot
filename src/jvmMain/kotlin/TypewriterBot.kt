@@ -1,62 +1,94 @@
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import io.github.bonigarcia.wdm.WebDriverManager
 import org.openqa.selenium.By
-import org.openqa.selenium.firefox.FirefoxDriver
+import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.security.SecureRandom
 import java.time.Duration
+import kotlin.properties.Delegates
 
 /**
  * This class is a bot that automates the process of typing on the website "at4.typewriter.at"
  * It uses the Selenium library to interact with the website and complete levels.
  * It simulates human-like typing by introducing errors with a specified probability and using random delays between keystrokes.
  */
-class TypewriterBot(
+object TypewriterBot {
+
     /**
      * The username to use when logging in to the website
      */
-    private val username: String,
+    private lateinit var username: String
+
     /**
      * The password to use when logging in to the website
      */
-    private val password: String,
+    private lateinit var password: String
+
     /**
      * The minimum delay, in milliseconds, between keystrokes
      */
-    private val minDelay: Long,
+    private var minDelay by Delegates.notNull<Long>()
+
     /**
      * The maximum delay, in milliseconds, between keystrokes
      */
-    private val maxDelay: Long,
+    private var maxDelay by Delegates.notNull<Long>()
+
     /**
      * The probability, as a percentage, of introducing errors while typing
      */
-    private val errorProbability: Int,
+    private var errorProbability by Delegates.notNull<Int>()
+
     /**
      * The number of levels to complete
      */
-    private val levels: Int
-) {
+    private var levels by Delegates.notNull<Int>()
 
     /**
      * Property that indicates if the bot is currently running
      */
-    var isRunning = false
+    var isRunning by mutableStateOf(false)
         private set
 
     /**
      * The FirefoxDriver instance used to interact with the website
      */
-    private val driver = FirefoxDriver()
+    private lateinit var driver: WebDriver
 
     /**
      * The WebDriverWait instance used to wait for elements to load on the website
      */
-    private val wait = WebDriverWait(driver, Duration.ofSeconds(10))
+    private lateinit var wait: WebDriverWait
 
     /**
      * The SecureRandom instance used to generate random numbers for delays and errors
      */
     private val random = SecureRandom.getInstanceStrong()
+
+    /**
+     * Setups the bot
+     */
+    fun setup(
+        username: String,
+        password: String,
+        minDelay: Long, maxDelay: Long,
+        errorProbability: Int,
+        levels: Int
+    ) {
+        this.username = username
+        this.password = password
+        this.minDelay = minDelay
+        this.maxDelay = maxDelay
+        this.errorProbability = errorProbability
+        this.levels = levels
+
+        // initialize the browser driver and driver wait
+        driver = WebDriverManager.firefoxdriver().create()
+        wait = WebDriverWait(driver, Duration.ofSeconds(10))
+    }
 
     /**
      * Start the bot
@@ -96,7 +128,7 @@ class TypewriterBot(
         isRunning = false
         try {
             // close the browser window
-            driver.close()
+            driver.quit()
         } catch (e: Exception) {
             e.printStackTrace()
         }

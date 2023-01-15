@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "dev.lyzev"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     google()
@@ -30,6 +30,8 @@ kotlin {
                 implementation("org.seleniumhq.selenium:selenium-java:4.7.2")
                 // https://mvnrepository.com/artifact/com.google.code.gson/gson
                 implementation("com.google.code.gson:gson:2.10.1")
+                // https://bonigarcia.dev/webdrivermanager/
+                implementation("io.github.bonigarcia:webdrivermanager:5.3.1")
             }
         }
     }
