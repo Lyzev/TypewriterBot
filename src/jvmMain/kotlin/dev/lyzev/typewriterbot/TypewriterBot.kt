@@ -164,7 +164,7 @@ object TypewriterBot {
             }
 
             // wait for a random delay between minDelay and maxDelay
-            Thread.sleep(minDelay + random.nextInt((maxDelay - minDelay).toInt()))
+            Thread.sleep(minDelay + random.nextInt((maxDelay - minDelay).toInt().coerceAtLeast(1)))
         }
     }
 }
