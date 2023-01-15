@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TypewriterBot-jvm-1.0.1">
+    <output-path>$PROJECT_DIR$/build/libs</output-path>
+    <root id="archive" name="TypewriterBot-jvm-1.0.1.jar">
+      <element id="module-output" name="TypewriterBot.jvmMain" />
+    </root>
+  </artifact>
+</component>

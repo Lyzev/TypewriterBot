@@ -97,7 +97,7 @@ fun App() {
                 OutlinedTextField(value = wpm.toString(),
                     onValueChange = { value ->
                         if (value.length in 1..3) wpm = value.filter { it.isDigit() }.toInt()
-                        else if (value.isEmpty()) wpm = 0
+                        else if (value.isEmpty()) wpm = 1
                     },
                     label = { Text("Words per Minute") },
                     singleLine = true,
@@ -123,7 +123,7 @@ fun App() {
                 OutlinedTextField(value = levels.toString(),
                     onValueChange = { value ->
                         if (value.length in 1..3) levels = value.filter { it.isDigit() }.toInt()
-                        else if (value.isEmpty()) levels = 0
+                        else if (value.isEmpty()) levels = 1
                     },
                     label = { Text("Levels") },
                     singleLine = true,
