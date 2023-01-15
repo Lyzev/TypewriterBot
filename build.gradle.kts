@@ -32,6 +32,8 @@ kotlin {
                 implementation("com.google.code.gson:gson:2.10.1")
                 // https://bonigarcia.dev/webdrivermanager/
                 implementation("io.github.bonigarcia:webdrivermanager:5.3.1")
+                // https://mvnrepository.com/artifact/com.microsoft.alm/auth-secure-storage
+                implementation("com.microsoft.alm:auth-secure-storage:0.6.4")
             }
         }
     }

@@ -18,33 +18,21 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.*
-import java.awt.Desktop
+import com.microsoft.alm.secret.Credential
+import com.microsoft.alm.storage.StorageProvider
 import java.net.URI
-import java.util.*
 
 /**
  * This class is a Composable function that creates a GUI for a TypewriterBot using the Compose library
  */
 @Composable
 @Preview
-fun App() {
-    // Open a URL in the browser
-    fun openInBrowser(uri: URI) {
-        val osName by lazy(LazyThreadSafetyMode.NONE) { System.getProperty("os.name").lowercase(Locale.getDefault()) }
-        val desktop = Desktop.getDesktop()
-        when {
-            Desktop.isDesktopSupported() && desktop.isSupported(Desktop.Action.BROWSE) -> desktop.browse(uri)
-            "mac" in osName -> Runtime.getRuntime().exec("open $uri")
-            "nix" in osName || "nux" in osName -> Runtime.getRuntime().exec("xdg-open $uri")
-            else -> throw RuntimeException("cannot open $uri")
-        }
-    }
-
+fun App(username: MutableState<String>, password: MutableState<String>) {
     var enabled by remember { mutableStateOf(true) }
 
-    var username by remember { mutableStateOf("") }
+    var username by remember { username }
 
-    var password by remember { mutableStateOf("") }
+    var password by remember { password }
     var passwordVisible by remember { mutableStateOf(false) }
 
     var wpm by remember { mutableStateOf(60) }
@@ -107,7 +95,7 @@ fun App() {
                 OutlinedTextField(
                     value = wpm.toString(),
                     onValueChange = { value ->
-                        if (value.length in 1..3) wpm = value.filter { it.isDigit() }.toInt()
+                        if (value.length in 1..4) wpm = value.filter { it.isDigit() }.toInt()
                         else if (value.isEmpty()) wpm = 1
                     },
                     label = { Text("Words per Minute") },
@@ -156,13 +144,20 @@ fun App() {
                     if (TypewriterBot.isRunning) {
                         Thread {
                             enabled = false
+
+                            // Stop the bot
                             TypewriterBot.stop()
+
                             enabled = true
                         }.start()
                     } else {
                         Thread {
                             enabled = false
+
+                            // Calculate delay between keystrokes
                             val delay = 1000.0 / ((wpm * 5) / 60.0)
+
+                            // Setups the bot
                             TypewriterBot.setup(
                                 username,
                                 password,
@@ -170,7 +165,10 @@ fun App() {
                                 errorProbability,
                                 levels
                             )
+
                             enabled = true
+
+                            // Starts the bot
                             TypewriterBot.start()
                         }.start()
                     }
@@ -183,12 +181,23 @@ fun App() {
 }
 
 fun main() = application {
+    // Get login credentials from windows credential manager
+    val storage = StorageProvider.getCredentialStorage(true, StorageProvider.SecureOption.PREFER)
+    val credential = storage["TypewriterBot"] ?: Credential("", "")
+    val username = mutableStateOf(credential.Username)
+    val password = mutableStateOf(credential.Password)
+
     // Creates a window
     Window(
-        onCloseRequest = ::exitApplication, state = rememberWindowState(
+        onCloseRequest = {
+            // Save login credentials to windows credential manager
+            storage.add("TypewriterBot", Credential(username.value, password.value))
+            // Close the window
+            exitApplication()
+        }, state = rememberWindowState(
             WindowPlacement.Floating, false, WindowPosition(Alignment.Center), 350.dp, 500.dp
         ), resizable = false, title = "TypewriterBot by Lyzev", icon = painterResource("icon.ico")
     ) {
-        App()
+        App(username, password)
     }
 }
