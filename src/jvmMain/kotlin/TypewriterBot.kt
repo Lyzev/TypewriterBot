@@ -19,7 +19,7 @@ class TypewriterBot(
         private set
 
     private val driver = FirefoxDriver()
-    private val wait = WebDriverWait(driver, Duration.ofMillis(40))
+    private val wait = WebDriverWait(driver, Duration.ofSeconds(10))
     private val random = SecureRandom.getInstanceStrong()
 
     fun start() {
@@ -34,7 +34,7 @@ class TypewriterBot(
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[3]/div[2]/div[1]/form/div[3]/input")))
                 .click()
 
-            Thread.sleep(5000)
+            wait.until(ExpectedConditions.urlToBe("https://at4.typewriter.at/index.php?r=user/overview"))
 
             for (i in 1..levels) {
                 Thread.sleep(500)
