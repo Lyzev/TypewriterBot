@@ -1,3 +1,5 @@
+package dev.lyzev.typewriterbot
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -78,12 +80,12 @@ object TypewriterBot {
         errorProbability: Int,
         levels: Int
     ) {
-        this.username = username
-        this.password = password
-        this.minDelay = minDelay
-        this.maxDelay = maxDelay
-        this.errorProbability = errorProbability
-        this.levels = levels
+        TypewriterBot.username = username
+        TypewriterBot.password = password
+        TypewriterBot.minDelay = minDelay
+        TypewriterBot.maxDelay = maxDelay
+        TypewriterBot.errorProbability = errorProbability
+        TypewriterBot.levels = levels
 
         // initialize the browser driver and driver wait
         driver = WebDriverManager.firefoxdriver().create()

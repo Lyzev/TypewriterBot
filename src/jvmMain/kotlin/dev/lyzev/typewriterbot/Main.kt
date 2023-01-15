@@ -1,3 +1,5 @@
+package dev.lyzev.typewriterbot
+
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,7 +18,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.*
-import io.github.bonigarcia.wdm.WebDriverManager
 import java.awt.Desktop
 import java.net.URI
 import java.util.*
