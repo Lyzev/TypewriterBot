@@ -12,16 +12,13 @@
     <img src="https://img.shields.io/github/contributors/Lyzev/TypewriterBot" alt="GitHub contributors"/>
 </div>
 
+## Disclaimer
+Please note, this repository is for educational and proof of concept purposes only. The information and code contained within it should not be used for any illegal or unethical activities. The contributors to this repository are not liable for any actions taken or damages caused by the use of the information or code provided here. It is the responsibility of the user to ensure compliance with all applicable laws and regulations, and to obtain any necessary permissions before using the code or information.
+
 ## Installation / Usage
 - Download [TypewriterBot](https://github.com/Lyzev/TypewriterBot/releases/latest) and run the installer
 - Download [FireFox](https://www.mozilla.org/de/firefox/new/) and run the installer
 - Run the TypewriterBot and have fun!
 
-## Video Tutorial
-Coming soon...
-
 ## Bugs and Suggestions
 Bug reports and suggestions should be made in this repo's [issue tracker](https://github.com/Lyzev/TypewriterBot/issues) using the templates provided. Please provide as much information as you can to best help us understand your issue and give a better chance of it being resolved.
-
-## Important
-Please note, this repository is for educational purposes only. No contributors, major or minor, are to fault for any actions done by this program.
