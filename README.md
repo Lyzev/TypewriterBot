@@ -3,7 +3,7 @@
 <p align="center">A bot for <a href="https://at4.typewriter.at/">typewriter</a> that will automatically log in and do levels.</p>
 
 <div align="center">
-    <a href="https://discord.gg/Wfc3U8Dgn7"><img src="https://img.shields.io/discord/610120595765723137?logo=discord" alt="Discord"/></a>
+    <a href="https://lyzev.github.io/discord/"><img src="https://img.shields.io/discord/610120595765723137?logo=discord" alt="Discord"/></a>
     <br><br>
     <img src="https://img.shields.io/github/last-commit/Lyzev/TypewriterBot" alt="GitHub last commit"/>
     <img src="https://img.shields.io/github/commit-activity/w/Lyzev/TypewriterBot" alt="GitHub commit activity"/>
